@@ -34,6 +34,7 @@
 	#include <arpa/inet.h>
 	#include <netdb.h>	// for gethostbyname()
 	#include <errno.h>
+	#include <unistd.h>
 #else
 	#include <WinSock2.h>
 	#define vsnprintf _vsnprintf
