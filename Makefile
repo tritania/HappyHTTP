@@ -24,7 +24,7 @@ $(EXE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
 	
 lib:
-	make
+	$(CXX) $(CFLAGS) -g -O -c $(SRCS)
 	ar -cvq libHappyHTTP.a happyhttp.o
 
 clean:
