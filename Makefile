@@ -1,5 +1,6 @@
 # to build for windows, use make WIN32=1
 
+CXX = clang++
 EXE = test
 SRCS = test.cpp happyhttp.cpp
 LIB = libHappyHTTP.a
