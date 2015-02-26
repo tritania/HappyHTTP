@@ -36,7 +36,7 @@
 	#include <errno.h>
 	#include <unistd.h>
 #else
-	#include <WinSock2.h>
+	#include <winsock2.h>
 	#define vsnprintf _vsnprintf
 #endif
 
@@ -226,6 +226,15 @@ Wobbly::Wobbly( const char* fmt, ... )
 //
 //---------------------------------------------------------------------
 Connection::Connection( const char* host, int port ) :
+	#ifdef WIN32
+		WSAData wsaData;
+		int code = WSAStartup(MAKEWORD(1, 1), &wsaData);
+		if( code != 0 )
+		{
+			fprintf(stderr, "Connection could not be made. %d\n",code);
+			return 0;
+		}
+	#endif //WIN32
 	m_ResponseBeginCB(0),
 	m_ResponseDataCB(0),
 	m_ResponseCompleteCB(0),
@@ -297,6 +306,9 @@ void Connection::close()
 Connection::~Connection()
 {
 	close();
+	#ifdef WIN32
+		WSACleanup();
+	#endif // WIN32
 }
 
 void Connection::request( const char* method,
