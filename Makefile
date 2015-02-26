@@ -2,6 +2,7 @@
 
 EXE = test
 SRCS = test.cpp happyhttp.cpp
+LIB = libHappyHTTP.a
 
 CXXFLAGS = -ggdb
 LDFLAGS =
@@ -20,11 +21,16 @@ OBJS = $(patsubst %.cpp,%.o,$(SRCS) )
 
 $(EXE): $(OBJS)
 	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
-
+	
+lib:
+	make
+	ar -cvq libHappyHTTP.a happyhttp.o
 
 clean:
 	rm -f $(OBJS)
 	rm -f .depend
+	rm -f $(LIB)
+	rm -f $(EXE)
 
 
 # automatically generate dependencies from our .cpp files
