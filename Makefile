@@ -1,6 +1,6 @@
 # to build for windows, use make WIN32=1
 
-CXX = clang++
+CC = clang++
 EXE = test
 SRCS = test.cpp happyhttp.cpp
 LIB = libHappyHTTP.a
@@ -21,10 +21,10 @@ OBJS = $(patsubst %.cpp,%.o,$(SRCS) )
 
 
 $(EXE): $(OBJS)
-	$(CXX) -o $@ $(OBJS) $(LDFLAGS)
+	$(CC) -o $@ $(OBJS) $(LDFLAGS)
 	
 lib:
-	$(CXX) $(CFLAGS) -g -O -c $(SRCS)
+	$(CC) $(CFLAGS) -g -O -c $(SRCS) $(LDFLAGS)
 	ar -cvq libHappyHTTP.a happyhttp.o
 
 clean:
@@ -37,7 +37,7 @@ clean:
 # automatically generate dependencies from our .cpp files
 # (-MM tells the compiler to just output makefile rules)
 depend:
-	$(CXX) -MM $(CPPFLAGS) $(CXXFLAGS) $(SRCS) > .depend
+	$(CC) -MM $(CPPFLAGS) $(CXXFLAGS) $(SRCS) > .depend
 
 ifeq ($(wildcard .depend),.depend)
 include .depend

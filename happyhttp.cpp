@@ -226,15 +226,6 @@ Wobbly::Wobbly( const char* fmt, ... )
 //
 //---------------------------------------------------------------------
 Connection::Connection( const char* host, int port ) :
-	#ifdef WIN32
-		WSAData wsaData;
-		int code = WSAStartup(MAKEWORD(1, 1), &wsaData);
-		if( code != 0 )
-		{
-			fprintf(stderr, "Connection could not be made. %d\n",code);
-			return 0;
-		}
-	#endif //WIN32
 	m_ResponseBeginCB(0),
 	m_ResponseDataCB(0),
 	m_ResponseCompleteCB(0),
@@ -244,6 +235,14 @@ Connection::Connection( const char* host, int port ) :
 	m_Port( port ),
 	m_Sock(-1)
 {
+    #ifdef WIN32
+    WSAData wsaData;
+    int code = WSAStartup(MAKEWORD(1, 1), &wsaData);
+    if( code != 0 )
+    {
+        fprintf(stderr, "Connection could not be made. %d\n",code);
+    }
+    #endif //WIN32
 }
 
 
